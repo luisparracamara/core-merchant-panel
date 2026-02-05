@@ -1,0 +1,13 @@
+package com.core.merchant.panel.exception;
+
+public class InternalServerException extends DomainException {
+
+    public InternalServerException(String message) {
+        super(message);
+    }
+
+    public InternalServerException(String message, Throwable ex) {
+        super(message, ex);
+    }
+
+}

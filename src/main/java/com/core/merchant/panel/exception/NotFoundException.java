@@ -1,0 +1,13 @@
+package com.core.merchant.panel.exception;
+
+public class NotFoundException extends DomainException {
+
+    public NotFoundException(String message) {
+        super(message);
+    }
+
+    public NotFoundException(String message, Throwable ex) {
+        super(message, ex);
+    }
+
+}
