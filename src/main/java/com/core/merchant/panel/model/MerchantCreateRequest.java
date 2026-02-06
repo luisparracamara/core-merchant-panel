@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MerchantCreateRequest {
 
-    @NotBlank(message = "Merchant name needed")
+    @NotBlank(message = "Merchant name is required")
     private String name;
 
     @NotBlank
@@ -21,12 +21,12 @@ public class MerchantCreateRequest {
 
     private String businessUnit;
 
-    @Pattern(regexp = "ACTIVE|INACTIVE", message = "Invalid status")
+    @Pattern(regexp = "ENABLED|DISABLED", message = "Status must be either ENABLED or DISABLED")
     private String status;
 
     private String logo;
 
-    @NotBlank(message = "Email needed")
+    @NotBlank(message = "Email is required")
     @Email
     private String email;
 

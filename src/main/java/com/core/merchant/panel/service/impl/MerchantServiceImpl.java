@@ -2,8 +2,7 @@ package com.core.merchant.panel.service.impl;
 
 import com.core.merchant.panel.entity.Merchant;
 import com.core.merchant.panel.exception.NotFoundException;
-import com.core.merchant.panel.mapper.MerchantMapper;
-import com.core.merchant.panel.mapper.MerchantMapperInterface;
+import com.core.merchant.panel.mapper.PanelMapperInterface;
 import com.core.merchant.panel.model.MerchantCreateRequest;
 import com.core.merchant.panel.model.MerchantUpdateRequest;
 import com.core.merchant.panel.repository.MerchantRepository;
@@ -15,7 +14,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.Locale;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -23,20 +25,31 @@ import java.util.Base64;
 public class MerchantServiceImpl implements MerchantService {
 
     private final MerchantRepository merchantRepository;
-    private final MerchantMapper merchantMapper;
-    private final MerchantMapperInterface merchantMapperInterface;
+    private final PanelMapperInterface panelMapperInterface;
 
     @Override
     public Merchant createMerchant(MerchantCreateRequest merchantCreateRequest) {
-        merchantMapper.toMerchant(merchantCreateRequest, generateSecretKey());
-        return merchantRepository.save(merchantMapper.toMerchant(merchantCreateRequest, generateSecretKey()));
+
+        Merchant merchant = Merchant.builder()
+                .name(merchantCreateRequest.getName())
+                .country(merchantCreateRequest.getCountry().toUpperCase(Locale.ROOT))
+                .businessUnit(merchantCreateRequest.getBusinessUnit())
+                .status(merchantCreateRequest.getStatus())
+                .logo(merchantCreateRequest.getLogo())
+                .email(merchantCreateRequest.getEmail())
+                .creationDate(LocalDateTime.now())
+                .loginId(UUID.randomUUID().toString())
+                .secretKey(generateSecretKey())
+                .build();
+
+        return merchantRepository.save(merchant);
     }
 
     @Override
     public Merchant updateMerchant(Long id, MerchantUpdateRequest merchantUpdateRequest) {
         log.info("Updating merchant with id: {}", id);
         Merchant existingMerchant = getMerchantById(id);
-        merchantMapperInterface.updateMerchantFromRequest(merchantUpdateRequest, existingMerchant);
+        panelMapperInterface.updateMerchantFromRequest(merchantUpdateRequest, existingMerchant);
         return merchantRepository.save(existingMerchant);
     }
 
