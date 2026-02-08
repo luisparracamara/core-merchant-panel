@@ -1,7 +1,9 @@
 package com.core.merchant.panel.mapper;
 
+import com.core.merchant.panel.entity.Gateway;
 import com.core.merchant.panel.entity.Merchant;
 import com.core.merchant.panel.entity.PaymentMethod;
+import com.core.merchant.panel.model.GatewayUpdateRequest;
 import com.core.merchant.panel.model.MerchantUpdateRequest;
 import com.core.merchant.panel.model.PaymentMethodUpdateRequest;
 import org.mapstruct.Mapper;
@@ -15,5 +17,7 @@ public interface PanelMapperInterface {
     void updateMerchantFromRequest(MerchantUpdateRequest request, @MappingTarget Merchant entity);
 
     void updatePaymentMethodFromRequest(PaymentMethodUpdateRequest request, @MappingTarget PaymentMethod entity);
+
+    void updateGatewayFromRequest(GatewayUpdateRequest request, @MappingTarget Gateway entity);
 
 }
