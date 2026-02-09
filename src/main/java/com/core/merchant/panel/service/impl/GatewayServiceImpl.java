@@ -24,7 +24,7 @@ public class GatewayServiceImpl implements GatewayService {
     private final PanelMapperInterface mapper;
 
     @Override
-    public Page<GatewayResponse>  getAllGateways(Pageable pageable) {
+    public Page<GatewayResponse> getAllGateways(Pageable pageable) {
         log.info("Fetching all gateways with pagination");
         return gatewayRepository.findAll(pageable)
                 .map(g -> new GatewayResponse(
